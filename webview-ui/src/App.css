@@ -1,0 +1,128 @@
+/* Basic CSS styles for the app */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* Animation for loader */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Button styling */
+button {
+  cursor: pointer;
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Markdown styling */
+.markdown-content {
+  width: 100%;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+.markdown-content pre {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  padding: 8px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.markdown-content code {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.markdown-content p {
+  margin-bottom: 8px;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
+
+/* Message bubbles styling */
+.message-bubble {
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.message-bubble:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.user-message {
+  border-left: 3px solid var(--vscode-gitDecoration-addedResourceForeground);
+}
+
+.assistant-message {
+  border-left: 3px solid var(--vscode-gitDecoration-modifiedResourceForeground);
+}
+
+/* Header styling */
+.vscode-header {
+  background-color: var(--vscode-sideBar-background);
+  border-bottom: 1px solid var(--vscode-panel-border);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Input textarea animation */
+@keyframes focus-border {
+  from {
+    border-color: var(--vscode-input-border);
+  }
+  to {
+    border-color: var(--vscode-button-background);
+  }
+}
+
+.input-textarea:focus {
+  animation: focus-border 0.3s forwards;
+  outline: none;
+  box-shadow: 0 0 0 1px var(--vscode-button-background);
+}
+
+/* Dropdown styling */
+.provider-dropdown {
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--vscode-dropdown-border);
+  background-color: var(--vscode-dropdown-background);
+  color: var(--vscode-dropdown-foreground);
+  font-size: 13px;
+  transition: border-color 0.2s ease;
+}
+
+.provider-dropdown:hover, 
+.provider-dropdown:focus {
+  border-color: var(--vscode-button-background);
+  outline: none;
+}
