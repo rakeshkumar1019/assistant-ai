@@ -1,12 +1,13 @@
 {
   "name": "assistant-code-ai",
-  "displayName": "assistant-code-ai",
-  "description": "",
+  "displayName": "Assistant Code AI",
+  "description": "AI-powered coding assistant with GitHub PR review capabilities and chat interface",
   "version": "0.0.2",
   "publisher": "Assistant-AI",
   "engines": {
     "vscode": "^1.89.0"
   },
+  "icon": "media/extension-icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/rakeshkumar1019/assistant-ai.git"
