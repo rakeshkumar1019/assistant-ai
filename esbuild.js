@@ -24,6 +24,7 @@ const esbuildProblemMatcherPlugin = {
 };
 
 async function main() {
+	// Build extension
 	const ctx = await esbuild.context({
 		entryPoints: [
 			'src/extension.ts'
@@ -42,11 +43,31 @@ async function main() {
 			esbuildProblemMatcherPlugin,
 		],
 	});
+
+	// Build PR review component
+	const prReviewCtx = await esbuild.context({
+		entryPoints: ['webview-ui/src/pr-review.ts'],
+		bundle: true,
+		format: 'iife',
+		minify: production,
+		sourcemap: !production,
+		sourcesContent: false,
+		platform: 'browser',
+		outfile: 'dist/pr-review.js',
+		logLevel: 'silent',
+		plugins: [
+			esbuildProblemMatcherPlugin,
+		],
+	});
+
 	if (watch) {
 		await ctx.watch();
+		await prReviewCtx.watch();
 	} else {
 		await ctx.rebuild();
+		await prReviewCtx.rebuild();
 		await ctx.dispose();
+		await prReviewCtx.dispose();
 	}
 }
 

@@ -2,8 +2,10 @@ import * as vscode from 'vscode';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { readdirSync } from 'fs';
+import { GitHubService } from './githubAuth';
+import { PRReviewView } from './prReviewView';
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   // Helper function to ensure settings have the correct structure
   function getStructuredSettings() {
     const settings = context.globalState.get('aiAssistantSettings');
@@ -30,6 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const provider = new ChatViewProvider(context.extensionUri, context, getStructuredSettings);
+  
+  // Initialize GitHub service
+  const githubService = new GitHubService(context);
+  const prReviewView = new PRReviewView(context.extensionUri, githubService);
 
   // Store the context in module exports for easy access
   module.exports.getContext = () => context;
@@ -46,6 +52,62 @@ export function activate(context: vscode.ExtensionContext) {
       }
     )
   );
+
+  // Register commands
+  let loginCommand = vscode.commands.registerCommand('assistant.loginToGithub', async () => {
+    try {
+      const success = await githubService.login();
+      if (success) {
+        prReviewView.show();
+      } else {
+        vscode.window.showErrorMessage('Failed to login to GitHub');
+      }
+    } catch (error) {
+      vscode.window.showErrorMessage(`GitHub login failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  });
+
+  let showPRReviewCommand = vscode.commands.registerCommand('assistant.showPrReview', async () => {
+    if (githubService.isAuthenticated()) {
+      prReviewView.show();
+    } else {
+      const action = await vscode.window.showInformationMessage(
+        'You need to login to GitHub first',
+        'Login'
+      );
+      if (action === 'Login') {
+        vscode.commands.executeCommand('assistant.loginToGithub');
+      }
+    }
+  });
+
+  // Handle messages from the PR review webview
+  prReviewView.onDidReceiveMessage(async (message: { command: string; url?: string }) => {
+    switch (message.command) {
+      case 'login':
+        const success = await githubService.login();
+        if (success) {
+          prReviewView.show();
+        }
+        break;
+      case 'logout':
+        await githubService.logout();
+        prReviewView.show();
+        break;
+      case 'refreshPRs':
+        prReviewView.show();
+        break;
+      case 'openPR':
+        if (message.url) {
+          vscode.env.openExternal(vscode.Uri.parse(message.url));
+        }
+        break;
+    }
+  });
+
+  context.subscriptions.push(loginCommand);
+  context.subscriptions.push(showPRReviewCommand);
+  context.subscriptions.push({ dispose: () => prReviewView.dispose() });
 
   const showSettingsCommand = vscode.commands.registerCommand('assistant.showWebViewUi', () => {
     // Create and show settings panel in a new tab
@@ -133,6 +195,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(showSettingsCommand);
   context.subscriptions.push(newChatCommand);
 }
+
+export function deactivate() {}
 
 // Helper function to get settings UI HTML
 function getSettingsHtml(webview: vscode.Webview, extensionUri: vscode.Uri): string {
