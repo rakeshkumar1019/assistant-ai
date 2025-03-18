@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" fill="#24292e" rx="14" ry="14"/>
-  <g fill="#61dafb">
-    <!-- Code brackets -->
-    <path d="M41,38 L25,64 L41,90" stroke="#61dafb" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M87,38 L103,64 L87,90" stroke="#61dafb" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    
-    <!-- AI Brain/Circuit in the middle -->
-    <circle cx="64" cy="64" r="18" fill="none" stroke="#61dafb" stroke-width="4"/>
-    <circle cx="64" cy="64" r="5" fill="#61dafb"/>
-    <line x1="64" y1="46" x2="64" y2="40" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="64" y1="82" x2="64" y2="88" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="46" y1="64" x2="40" y2="64" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="82" y1="64" x2="88" y2="64" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    
-    <!-- Connection lines -->
-    <line x1="53" y1="53" x2="48" y2="48" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="75" y1="53" x2="80" y2="48" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="53" y1="75" x2="48" y2="80" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-    <line x1="75" y1="75" x2="80" y2="80" stroke="#61dafb" stroke-width="3" stroke-linecap="round"/>
-  </g>
+  <!-- Black background -->
+  <rect width="128" height="128" fill="#000000"/>
+  
+  <!-- AAI text -->
+  <text x="64" 
+        y="72" 
+        font-family="Arial, sans-serif" 
+        font-size="40" 
+        font-weight="bold" 
+        fill="#FFFFFF" 
+        text-anchor="middle" 
+        dominant-baseline="middle">AAI</text>
 </svg> 
