@@ -2,7 +2,7 @@
   "name": "assistant-code-ai",
   "displayName": "assistant-code-ai",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Assistant-AI",
   "engines": {
     "vscode": "^1.89.0"
